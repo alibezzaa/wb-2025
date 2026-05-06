@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Bien-être au Maroc — WEMWBS | Ali Bezzaa / FSJES Marrakech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bleu:#1B4F8A;--vert:#2E8B6A;--fond:#FAFAFA;--texte:#1A1A2E;
+  --gris:#5A6A7A;--bord:#D8E2EE;--carte:#FFFFFF;--err:#C0392B;
+  --r:12px;--ombre:0 2px 16px rgba(27,79,138,.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--fond);color:var(--texte);min-height:100vh}
+body.rtl{font-family:'Tajawal',sans-serif;direction:rtl}
+#prog{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--bleu),var(--vert));width:0%;transition:width .4s ease;z-index:999;border-radius:0 2px 2px 0}
+header{background:var(--bleu);color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.hdr-t{font-size:.95rem;font-weight:600}
+#btn-lng{background:rgba(255,255,255,.18);color:#fff;border:1.5px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 14px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit}
+#btn-lng:hover{background:rgba(255,255,255,.28)}
+main{max-width:720px;margin:0 auto;padding:32px 16px 80px}
+.carte{background:var(--carte);border-radius:var(--r);box-shadow:var(--ombre);padding:32px 28px;margin-bottom:20px}
+h1{font-size:1.5rem;font-weight:700;color:var(--bleu);margin-bottom:6px;line-height:1.3}
+h2{font-size:1.1rem;font-weight:600;color:var(--bleu);margin-bottom:18px}
+.badge{display:inline-block;background:#EAF1FB;color:var(--bleu);border-radius:6px;padding:4px 12px;font-size:.8rem;font-weight:600;margin-bottom:16px}
+.info{color:var(--gris);font-size:.93rem;line-height:1.7;margin-bottom:14px}
+.duree-b{display:inline-flex;align-items:center;gap:6px;background:#F0FBF6;color:var(--vert);border-radius:6px;padding:4px 12px;font-size:.82rem;font-weight:600;margin-bottom:16px}
+.rgpd{background:#F5F8FF;border-left:3px solid var(--bleu);border-radius:0 8px 8px 0;padding:12px 14px;font-size:.82rem;color:var(--gris);line-height:1.6;margin-bottom:20px}
+body.rtl .rgpd{border-left:none;border-right:3px solid var(--bleu);border-radius:8px 0 0 8px}
+.btn{display:block;width:100%;padding:13px 20px;border-radius:10px;font-size:.97rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;text-align:center;transition:opacity .2s,transform .15s}
+.btn:hover{opacity:.9;transform:translateY(-1px)}
+.btn:active{transform:none}
+.btn-p{background:linear-gradient(135deg,var(--bleu),#2563a8);color:#fff}
+.btn-s{background:#fff;color:var(--bleu);border:2px solid var(--bleu);margin-bottom:10px}
+.btn-v{background:linear-gradient(135deg,var(--vert),#27ae6b);color:#fff}
+.grp{margin-bottom:18px}
+.grp label{display:block;font-size:.88rem;font-weight:600;margin-bottom:6px}
+.grp select,.grp input[type=text]{width:100%;padding:10px 14px;border:1.5px solid var(--bord);border-radius:8px;font-size:.93rem;font-family:inherit;color:var(--texte);background:#fff;transition:border-color .2s;-webkit-appearance:none;appearance:none}
+.grp select:focus,.grp input:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 3px rgba(27,79,138,.12)}
+.item-w{background:#fff;border:1.5px solid var(--bord);border-radius:var(--r);padding:18px;margin-bottom:12px;transition:border-color .2s}
+.item-w.ok{border-color:var(--vert);box-shadow:0 0 0 2px rgba(46,139,106,.10)}
+.n-item{font-size:.75rem;font-weight:700;color:var(--bleu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.t-item{font-size:.95rem;font-weight:500;line-height:1.5;margin-bottom:14px}
+.lik{display:flex;gap:6px;flex-wrap:wrap}
+.lk{flex:1;min-width:72px}
+.lk input[type=radio]{display:none}
+.lk label{display:block;text-align:center;padding:8px 4px;border:1.5px solid var(--bord);border-radius:8px;font-size:.76rem;font-weight:500;cursor:pointer;transition:all .18s;color:var(--gris);user-select:none;line-height:1.3}
+.lk input:checked+label{background:var(--bleu);border-color:var(--bleu);color:#fff;font-weight:600;transform:translateY(-1px);box-shadow:0 2px 6px rgba(27,79,138,.25)}
+.lk label:hover{border-color:var(--bleu);color:var(--bleu);background:#EAF1FB}
+.msg-err{background:#FDF0EF;border:1px solid var(--err);color:var(--err);border-radius:8px;padding:10px 14px;font-size:.87rem;font-weight:500;margin-bottom:14px;display:none}
+.score-b{text-align:center;padding:24px;background:linear-gradient(135deg,#EAF1FB,#F0FBF6);border-radius:var(--r);margin-bottom:18px}
+.score-n{font-size:3.5rem;font-weight:700;color:var(--bleu);line-height:1}
+.score-s{font-size:1rem;color:var(--gris);margin-top:4px}
+.barre-f{height:16px;background:#E0E8F0;border-radius:99px;overflow:hidden;margin:14px 0 8px}
+.barre-r{height:100%;border-radius:99px;transition:width 1s ease;background:linear-gradient(90deg,var(--bleu),var(--vert))}
+.interp{border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:.92rem;font-weight:500;line-height:1.6}
+.interp.faible{background:#FDF0EF;border-left:4px solid #E74C3C;color:#7B241C}
+.interp.modere{background:#FEFAE6;border-left:4px solid #F39C12;color:#7D5A00}
+.interp.eleve{background:#F0FBF6;border-left:4px solid var(--vert);color:#1A5C3A}
+body.rtl .interp{border-left:none;border-right:4px solid}
+.merci{text-align:center;color:var(--gris);font-size:.92rem;line-height:1.7;margin-bottom:20px}
+.btns-r{display:flex;gap:10px;flex-wrap:wrap}
+.btns-r .btn{flex:1;min-width:140px}
+.page{display:none}
+.page.actif{display:block}
+.pts{display:flex;justify-content:center;gap:8px;margin-bottom:22px}
+.pt{width:10px;height:10px;border-radius:50%;background:var(--bord);transition:background .3s}
+.pt.actif{background:var(--bleu)}
+.pt.fait{background:var(--vert)}
+.toast{position:fixed;bottom:20px;right:20px;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;z-index:999;display:none;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.toast.ok{background:#2E8B6A;color:#fff}
+.toast.err{background:#C0392B;color:#fff}
+@media(max-width:480px){
+  .carte{padding:20px 14px}
+  .lk label{font-size:.7rem;padding:7px 3px}
+  h1{font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div class="toast" id="toast"></div>
+
+<!-- Iframe invisible pour absorber la réponse du formulaire -->
+<iframe id="_gs_frame" name="_gs_frame" style="display:none"></iframe>
+
+<header>
+  <span class="hdr-t" id="hdr">Bien-être au Maroc — WEMWBS</span>
+  <button id="btn-lng" onclick="basculer()">العربية</button>
+</header>
+
+<main>
+  <div class="pts">
+    <div class="pt actif" id="pt0"></div>
+    <div class="pt" id="pt1"></div>
+    <div class="pt" id="pt2"></div>
+    <div class="pt" id="pt3"></div>
+  </div>
+
+  <!-- ═══ PAGE 0 — Accueil ═══ -->
+  <div class="page actif" id="p0">
+    <div class="carte">
+      <div class="badge" id="badge">Ali Bezzaa — FSJES Marrakech</div>
+      <h1 id="titre">Bien-être au Maroc</h1>
+      <p class="info" id="sous">Étude sur le bien-être psychologique au Maroc</p>
+      <p class="info" id="obj">Cette étude vise à mesurer et comprendre le bien-être psychologique des individus au Maroc en utilisant l'échelle internationale validée WEMWBS (Warwick-Edinburgh, 2007). Vos réponses contribueront à une recherche académique menée à la FSJES de Marrakech.</p>
+      <div class="duree-b" id="duree">⏱ Durée estimée : environ 5 minutes</div>
+      <div class="rgpd" id="rgpd">🔒 <strong>Confidentialité :</strong> Vos réponses sont entièrement anonymes et utilisées uniquement à des fins de recherche académique. Participation volontaire.</div>
+      <button class="btn btn-p" id="btn-start" onclick="allerA(1)">Commencer le questionnaire →</button>
+    </div>
+  </div>
+
+  <!-- ═══ PAGE 1 — Socio-démographique ═══ -->
+  <div class="page" id="p1">
+    <div class="carte">
+      <h2 id="titre-demo">Quelques informations sur vous</h2>
+      <div class="grp">
+        <label id="lbl-age">Âge</label>
+        <select id="f-age">
+          <option value="">--</option>
+          <option value="18-24">18 – 24 ans</option>
+          <option value="25-34">25 – 34 ans</option>
+          <option value="35-44">35 – 44 ans</option>
+          <option value="45-54">45 – 54 ans</option>
+          <option value="55-64">55 – 64 ans</option>
+          <option value="65+">65 ans et plus</option>
+        </select>
+      </div>
+      <div class="grp">
+        <label id="lbl-genre">Genre</label>
+        <select id="f-genre">
+          <option value="">--</option>
+          <option value="homme" id="o-h">Homme</option>
+          <option value="femme" id="o-f">Femme</option>
+          <option value="nr" id="o-nr">Préfère ne pas répondre</option>
+        </select>
+      </div>
+      <div class="grp">
+        <label id="lbl-edu">Niveau d'éducation</label>
+        <select id="f-edu">
+          <option value="">--</option>
+          <option value="primaire" id="o-prim">Primaire</option>
+          <option value="college" id="o-col">Collège</option>
+          <option value="lycee" id="o-lyc">Lycée / Baccalauréat</option>
+          <option value="licence" id="o-lic">Licence / Bac+3</option>
+          <option value="master" id="o-mas">Master / Bac+5</option>
+          <option value="doctorat" id="o-doc">Doctorat</option>
+          <option value="autre" id="o-eaut">Autre</option>
+        </select>
+      </div>
+      <div class="grp">
+        <label id="lbl-sit">Situation professionnelle</label>
+        <select id="f-sit">
+          <option value="">--</option>
+          <option value="employe" id="o-emp">Employé(e)</option>
+          <option value="independant" id="o-ind">Indépendant(e)</option>
+          <option value="etudiant" id="o-etu">Étudiant(e)</option>
+          <option value="chomage" id="o-cho">Sans emploi</option>
+          <option value="retraite" id="o-ret">Retraité(e)</option>
+          <option value="autre" id="o-saut">Autre</option>
+        </select>
+      </div>
+      <div class="grp">
+        <label id="lbl-pays">Pays de résidence</label>
+        <input type="text" id="f-pays" placeholder="Ex : Maroc"/>
+      </div>
+      <div class="msg-err" id="err1">⚠️ Veuillez remplir tous les champs.</div>
+      <button class="btn btn-p" id="btn-demo" onclick="valDemo()">Continuer →</button>
+    </div>
+  </div>
+
+  <!-- ═══ PAGE 2 — Questionnaire WEMWBS ═══ -->
+  <div class="page" id="p2">
+    <div class="carte">
+      <h2 id="titre-q">Questionnaire de bien-être</h2>
+      <p class="info" id="consigne">Pour chacune des affirmations suivantes, indiquez à quelle fréquence vous avez ressenti cela <strong>au cours des 2 dernières semaines</strong>.</p>
+      <div id="items-wemwbs"></div>
+      <div class="msg-err" id="err2">⚠️ Veuillez répondre à toutes les questions.</div>
+      <button class="btn btn-v" id="btn-sub" onclick="soumettre()">Voir mes résultats ✓</button>
+    </div>
+  </div>
+
+  <!-- ═══ PAGE 3 — Résultats ═══ -->
+  <div class="page" id="p3">
+    <div class="carte">
+      <h2 id="titre-res">Vos résultats</h2>
+      <div class="score-b">
+        <div class="score-n" id="score-v">--</div>
+        <div class="score-s" id="score-s">/ 70</div>
+        <div class="barre-f"><div class="barre-r" id="barre" style="width:0%"></div></div>
+      </div>
+      <div class="interp" id="interp"></div>
+      <p class="merci" id="merci">Merci d'avoir participé à cette étude.</p>
+      <div class="btns-r">
+        <button class="btn btn-s" id="btn-rec" onclick="reset()">↺ Recommencer</button>
+        <button class="btn btn-v" id="btn-pdf" onclick="window.print()">⬇ Télécharger PDF</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// URL Google Sheets Apps Script — injectée par Jupyter
+// ════════════════════════════════════════════════════════════
+var SHEETS_URL = "https://script.google.com/macros/s/AKfycbxKJ6s22tVhwikzNn1cD6jk_xOJS1hHGYmeqBbIEF6QjhQ0zU8Xdyr4E__1mfLEa1TB/exec";
+
+// ════════════════════════════════════════════════════════════
+// TRADUCTIONS
+// ════════════════════════════════════════════════════════════
+var T = {
+fr:{
+  hdr:"Bien-être au Maroc — WEMWBS", lng_btn:"العربية",
+  badge:"Ali Bezzaa — FSJES Marrakech",
+  titre:"Bien-être au Maroc",
+  sous:"Étude sur le bien-être psychologique au Maroc",
+  obj:"Cette étude vise à mesurer et comprendre le bien-être psychologique des individus au Maroc en utilisant l'échelle internationale validée WEMWBS (Warwick-Edinburgh, 2007). Vos réponses contribueront à une recherche académique menée à la FSJES de Marrakech.",
+  duree:"⏱ Durée estimée : environ 5 minutes",
+  rgpd:"🔒 <strong>Confidentialité :</strong> Vos réponses sont entièrement anonymes et utilisées uniquement à des fins de recherche académique. Participation volontaire.",
+  btn_start:"Commencer le questionnaire →",
+  titre_demo:"Quelques informations sur vous",
+  lbl_age:"Âge", lbl_genre:"Genre",
+  lbl_edu:"Niveau d'éducation", lbl_sit:"Situation professionnelle",
+  lbl_pays:"Pays de résidence", ph_pays:"Ex : Maroc",
+  o_h:"Homme", o_f:"Femme", o_nr:"Préfère ne pas répondre",
+  o_prim:"Primaire", o_col:"Collège", o_lyc:"Lycée / Baccalauréat",
+  o_lic:"Licence / Bac+3", o_mas:"Master / Bac+5",
+  o_doc:"Doctorat", o_eaut:"Autre",
+  o_emp:"Employé(e)", o_ind:"Indépendant(e)",
+  o_etu:"Étudiant(e)", o_cho:"Sans emploi",
+  o_ret:"Retraité(e)", o_saut:"Autre",
+  btn_demo:"Continuer →",
+  err1:"⚠️ Veuillez remplir tous les champs.",
+  titre_q:"Questionnaire de bien-être",
+  consigne:"Pour chacune des affirmations suivantes, indiquez à quelle fréquence vous avez ressenti cela <strong>au cours des 2 dernières semaines</strong>.",
+  echelle:["Jamais","Rarement","Quelquefois","Souvent","Tout le temps"],
+  btn_sub:"Voir mes résultats ✓",
+  err2:"⚠️ Veuillez répondre à toutes les questions.",
+  q_lbl:"Question",
+  titre_res:"Vos résultats", score_s:"/ 70",
+  i_faible:"Bien-être faible — Votre score indique un niveau qui mérite attention. Nous vous encourageons à chercher un soutien professionnel.",
+  i_modere:"Bien-être modéré — Quelques aspects méritent attention. Prenez soin de vous.",
+  i_eleve:"Bien-être élevé — Continuez à prendre soin de vous et à cultiver ce qui contribue à votre équilibre.",
+  merci:"Merci d'avoir participé. Vos réponses contribuent à une meilleure compréhension du bien-être au Maroc.",
+  btn_rec:"↺ Recommencer", btn_pdf:"⬇ Télécharger PDF",
+  t_ok:"✓ Réponse enregistrée", t_err:"⚠️ Erreur — données sauvegardées localement",
+  items:[
+    "Je me suis senti(e) optimiste quant à l'avenir",
+    "Je me suis senti(e) utile",
+    "Je me suis senti(e) détendu(e)",
+    "J'ai eu des sentiments chaleureux envers d'autres personnes",
+    "J'ai eu de l'énergie à revendre",
+    "J'ai abordé les problèmes avec lucidité",
+    "Je me suis senti(e) bien dans ma peau",
+    "Je me suis senti(e) proche des autres",
+    "J'ai été en mesure de prendre mes propres décisions",
+    "Je me suis senti(e) aimé(e) et apprécié(e)",
+    "Je me suis intéressé(e) à de nouvelles choses",
+    "Je me suis senti(e) joyeux/joyeuse",
+    "Je me suis senti(e) inspiré(e) dans ce que je faisais",
+    "J'ai eu l'impression que je contribuais à quelque chose d'important"
+  ]
+},
+ar:{
+  hdr:"الرفاهية في المغرب — WEMWBS", lng_btn:"Français",
+  badge:"علي بزاع — كلية العلوم القانونية والاقتصادية مراكش",
+  titre:"الرفاهية في المغرب",
+  sous:"دراسة حول الرفاه النفسي في المغرب",
+  obj:"تهدف هذه الدراسة إلى قياس وفهم الرفاه النفسي للأفراد في المغرب باستخدام مقياس WEMWBS الدولي المُعتمد (وارويك-إدنبرة، 2007). ستُسهم إجاباتكم في بحث أكاديمي تُجريه كلية العلوم القانونية بمراكش.",
+  duree:"⏱ المدة التقديرية: حوالي 5 دقائق",
+  rgpd:"🔒 <strong>السرية:</strong> إجاباتكم مجهولة الهوية تمامًا ولن تُستخدم إلا لأغراض البحث العلمي. المشاركة طوعية.",
+  btn_start:"ابدأ الاستبيان ←",
+  titre_demo:"بعض المعلومات عنك",
+  lbl_age:"العمر", lbl_genre:"الجنس",
+  lbl_edu:"المستوى التعليمي", lbl_sit:"الوضع المهني",
+  lbl_pays:"بلد الإقامة", ph_pays:"مثال: المغرب",
+  o_h:"ذكر", o_f:"أنثى", o_nr:"أفضل عدم الإجابة",
+  o_prim:"ابتدائي", o_col:"إعدادي", o_lyc:"ثانوي / بكالوريا",
+  o_lic:"إجازة / ليسانس", o_mas:"ماستر",
+  o_doc:"دكتوراه", o_eaut:"أخرى",
+  o_emp:"موظف/ة", o_ind:"مستقل / رائد أعمال",
+  o_etu:"طالب/ة", o_cho:"باحث/ة عن عمل",
+  o_ret:"متقاعد/ة", o_saut:"أخرى",
+  btn_demo:"التالي ←",
+  err1:"⚠️ يرجى ملء جميع الحقول.",
+  titre_q:"استبيان الرفاه النفسي",
+  consigne:"لكل عبارة من العبارات التالية، أشر إلى مدى تكرار ما شعرت به <strong>خلال الأسبوعين الماضيين</strong>.",
+  echelle:["أبدًا","نادرًا","أحيانًا","كثيرًا","دائمًا"],
+  btn_sub:"عرض نتائجي ✓",
+  err2:"⚠️ يرجى الإجابة على جميع الأسئلة.",
+  q_lbl:"السؤال",
+  titre_res:"نتائجك", score_s:"/ 70",
+  i_faible:"رفاهية منخفضة — تشير درجتك إلى مستوى يستحق الاهتمام. نشجعك على طلب الدعم المتخصص.",
+  i_modere:"رفاهية متوسطة — بعض جوانب رفاهيتك تستحق الاهتمام. اعتنِ بنفسك.",
+  i_eleve:"رفاهية مرتفعة — تشير درجتك إلى مستوى جيد من الرفاه النفسي. استمر في العناية بنفسك.",
+  merci:"شكرًا لمشاركتك. تُسهم إجاباتك في فهم أعمق للرفاه النفسي في المغرب.",
+  btn_rec:"↺ البدء من جديد", btn_pdf:"⬇ تنزيل PDF",
+  t_ok:"✓ تم حفظ الإجابة", t_err:"⚠️ خطأ — تم الحفظ محلياً",
+  items:[
+    "شعرت بالتفاؤل تجاه المستقبل",
+    "شعرت أنني مفيد/ة",
+    "شعرت بالاسترخاء",
+    "شعرت بالدفء تجاه الآخرين",
+    "كان لديّ طاقة كافية",
+    "تعاملت مع المشكلات بوضوح",
+    "شعرت بالرضا عن نفسي",
+    "شعرت بالقرب من الآخرين",
+    "كنت قادر/ة على اتخاذ قراراتي بنفسي",
+    "شعرت بأنني محبوب/ة ومُقدَّر/ة",
+    "اهتممت بأشياء جديدة",
+    "شعرت بالبهجة والسعادة",
+    "شعرت بالإلهام فيما أقوم به",
+    "شعرت أن ما أفعله يساهم في شيء مهم"
+  ]
+}
+};
+
+// ════════════════════════════════════════════════════════════
+// ÉTAT
+// ════════════════════════════════════════════════════════════
+var lng = "fr";
+var pageN = 0;
+var tDebut = Date.now();
+var demo = {};
+
+// ════════════════════════════════════════════════════════════
+// LANGUE
+// ════════════════════════════════════════════════════════════
+function basculer(){
+  lng = lng === "fr" ? "ar" : "fr";
+  document.documentElement.lang = lng;
+  document.body.classList.toggle("rtl", lng === "ar");
+  appliquer();
+  if(pageN === 2) buildItems();
+}
+
+function set(id, val, html){
+  var el = document.getElementById(id);
+  if(!el) return;
+  if(html) el.innerHTML = val; else el.textContent = val;
+}
+
+function appliquer(){
+  var t = T[lng];
+  set("hdr", t.hdr);
+  set("btn-lng", t.lng_btn);
+  set("badge", t.badge);
+  set("titre", t.titre);
+  set("sous", t.sous);
+  set("obj", t.obj);
+  set("duree", t.duree);
+  set("rgpd", t.rgpd, true);
+  set("btn-start", t.btn_start);
+  set("titre-demo", t.titre_demo);
+  set("lbl-age", t.lbl_age);
+  set("lbl-genre", t.lbl_genre);
+  set("lbl-edu", t.lbl_edu);
+  set("lbl-sit", t.lbl_sit);
+  set("lbl-pays", t.lbl_pays);
+  var pays = document.getElementById("f-pays");
+  if(pays) pays.placeholder = t.ph_pays;
+  set("btn-demo", t.btn_demo);
+  set("err1", t.err1);
+  set("titre-q", t.titre_q);
+  set("consigne", t.consigne, true);
+  set("btn-sub", t.btn_sub);
+  set("err2", t.err2);
+  set("titre-res", t.titre_res);
+  set("score-s", t.score_s);
+  set("merci", t.merci);
+  set("btn-rec", t.btn_rec);
+  set("btn-pdf", t.btn_pdf);
+  // Options select
+  var opts = {
+    "o-h":t.o_h,"o-f":t.o_f,"o-nr":t.o_nr,
+    "o-prim":t.o_prim,"o-col":t.o_col,"o-lyc":t.o_lyc,
+    "o-lic":t.o_lic,"o-mas":t.o_mas,"o-doc":t.o_doc,"o-eaut":t.o_eaut,
+    "o-emp":t.o_emp,"o-ind":t.o_ind,"o-etu":t.o_etu,
+    "o-cho":t.o_cho,"o-ret":t.o_ret,"o-saut":t.o_saut
+  };
+  Object.keys(opts).forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.textContent = opts[id];
+  });
+}
+
+// ════════════════════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════════════════════
+function allerA(n){
+  document.getElementById("p"+pageN).classList.remove("actif");
+  pageN = n;
+  document.getElementById("p"+n).classList.add("actif");
+  majPts();
+  document.getElementById("prog").style.width = (pageN/3*100)+"%";
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(n === 2) buildItems();
+}
+
+function majPts(){
+  for(var i=0;i<4;i++){
+    var pt = document.getElementById("pt"+i);
+    pt.className = "pt";
+    if(i < pageN) pt.classList.add("fait");
+    if(i === pageN) pt.classList.add("actif");
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// VALIDATION SOCIO-DÉMO
+// ════════════════════════════════════════════════════════════
+function valDemo(){
+  var age   = document.getElementById("f-age").value;
+  var genre = document.getElementById("f-genre").value;
+  var edu   = document.getElementById("f-edu").value;
+  var sit   = document.getElementById("f-sit").value;
+  var pays  = document.getElementById("f-pays").value.trim();
+  var err   = document.getElementById("err1");
+  if(!age || !genre || !edu || !sit || !pays){
+    err.style.display = "block";
+    err.scrollIntoView({behavior:"smooth", block:"center"});
+    return;
+  }
+  err.style.display = "none";
+  demo = {age:age, genre:genre, education:edu, situation:sit, pays:pays};
+  allerA(2);
+}
+
+// ════════════════════════════════════════════════════════════
+// CONSTRUCTION ITEMS WEMWBS
+// ════════════════════════════════════════════════════════════
+function buildItems(){
+  var t = T[lng];
+  var c = document.getElementById("items-wemwbs");
+  c.innerHTML = "";
+  for(var i=0; i<14; i++){
+    (function(idx){
+      var d = document.createElement("div");
+      d.className = "item-w";
+      d.id = "iw"+idx;
+      var lik = "";
+      for(var v=0; v<5; v++){
+        lik += '<div class="lk">'
+          + '<input type="radio" name="q'+idx+'" id="q'+idx+'v'+(v+1)+'" value="'+(v+1)+'">'
+          + '<label for="q'+idx+'v'+(v+1)+'">'+t.echelle[v]+'</label>'
+          + '</div>';
+      }
+      d.innerHTML =
+        '<div class="n-item">'+t.q_lbl+' '+(idx+1)+' / 14</div>'
+        +'<div class="t-item">'+t.items[idx]+'</div>'
+        +'<div class="lik">'+lik+'</div>';
+      // Écoute du changement pour marquer l'item comme répondu
+      var radios = d.querySelectorAll('input[type=radio]');
+      for(var r=0; r<radios.length; r++){
+        radios[r].addEventListener("change", function(){
+          document.getElementById("iw"+idx).classList.add("ok");
+          var n = document.querySelectorAll('#items-wemwbs input:checked').length;
+          document.getElementById("prog").style.width = (0.667 + n/14*0.333)*100+"%";
+        });
+      }
+      c.appendChild(d);
+    })(i);
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// SOUMISSION
+// ════════════════════════════════════════════════════════════
+function soumettre(){
+  var reps = [];
+  var total = 0;
+  var t = T[lng];
+  for(var i=0; i<14; i++){
+    var sel = document.querySelector('input[name="q'+i+'"]:checked');
+    if(!sel){
+      var err = document.getElementById("err2");
+      err.style.display = "block";
+      err.scrollIntoView({behavior:"smooth", block:"center"});
+      return;
+    }
+    var v = parseInt(sel.value);
+    reps.push(v);
+    total += v;
+  }
+  document.getElementById("err2").style.display = "none";
+
+  var cls, txt;
+  if(total <= 42){ cls="faible"; txt=t.i_faible; }
+  else if(total <= 52){ cls="modere"; txt=t.i_modere; }
+  else{ cls="eleve"; txt=t.i_eleve; }
+
+  allerA(3);
+  document.getElementById("score-v").textContent = total;
+  setTimeout(function(){
+    document.getElementById("barre").style.width = ((total-14)/56*100)+"%";
+  }, 150);
+  var bloc = document.getElementById("interp");
+  bloc.className = "interp "+cls;
+  bloc.textContent = txt;
+
+  // Construction objet données
+  var entree = {
+    timestamp: new Date().toISOString(),
+    langue: lng,
+    age: demo.age,
+    genre: demo.genre,
+    education: demo.education,
+    situation: demo.situation,
+    pays: demo.pays,
+    score_total: total,
+    interpretation: cls,
+    duree_secondes: Math.round((Date.now()-tDebut)/1000)
+  };
+  for(var j=0; j<14; j++){
+    entree["item_"+(j+1)] = reps[j];
+  }
+
+  envoyerDonnees(entree);
+}
+
+// ════════════════════════════════════════════════════════════
+// ENVOI VERS GOOGLE SHEETS
+// Méthode : formulaire HTML caché ciblant une iframe invisible
+// Évite le blocage CORS de fetch no-cors (qui envoie un corps vide)
+// Apps Script reçoit les champs via e.parameter
+// ════════════════════════════════════════════════════════════
+function envoyerDonnees(entree){
+  var t = T[lng];
+  var toast = document.getElementById("toast");
+
+  // Sauvegarde locale systématique en backup
+  sauvegarderLocal(entree);
+
+  if(!SHEETS_URL || SHEETS_URL === "GOOGLE_SHEETS_URL_ICI"){
+    afficherToast(toast, t.t_err, "err");
+    console.warn("URL Google Sheets non configurée");
+    return;
+  }
+
+  try {
+    // Créer le formulaire caché
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = SHEETS_URL;
+    form.target = "_gs_frame";
+    form.style.display = "none";
+
+    // Ajouter chaque champ
+    var cles = Object.keys(entree);
+    for(var i=0; i<cles.length; i++){
+      var inp = document.createElement("input");
+      inp.type = "hidden";
+      inp.name = cles[i];
+      inp.value = entree[cles[i]] !== null && entree[cles[i]] !== undefined
+        ? String(entree[cles[i]]) : "";
+      form.appendChild(inp);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+
+    // Nettoyage après soumission
+    setTimeout(function(){ document.body.removeChild(form); }, 2000);
+
+    afficherToast(toast, t.t_ok, "ok");
+    console.log("✓ Données envoyées via form POST :", entree);
+
+  } catch(err){
+    afficherToast(toast, t.t_err, "err");
+    console.warn("Erreur form POST :", err);
+  }
+}
+
+function sauvegarderLocal(entree){
+  try{
+    var ex = JSON.parse(localStorage.getItem("wemwbs")||"[]");
+    ex.push(entree);
+    localStorage.setItem("wemwbs", JSON.stringify(ex));
+  } catch(e){}
+}
+
+function afficherToast(el, msg, cls){
+  el.textContent = msg;
+  el.className = "toast "+cls;
+  el.style.display = "block";
+  setTimeout(function(){ el.style.display = "none"; }, 4000);
+}
+
+// ════════════════════════════════════════════════════════════
+// RECOMMENCER
+// ════════════════════════════════════════════════════════════
+function reset(){
+  tDebut = Date.now();
+  demo = {};
+  ["f-age","f-genre","f-edu","f-sit"].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.value = "";
+  });
+  var pays = document.getElementById("f-pays");
+  if(pays) pays.value = "";
+  allerA(0);
+}
+
+// Init
+appliquer();
+</script>
+</body>
+</html>
